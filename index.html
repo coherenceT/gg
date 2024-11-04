@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmailJS Demo</title>
+</head>
+<body>
+
+    <h2>Email Teacher Form</h2>
+
+    <!-- Form for entering the email address -->
+    <form id="contactForm">
+        <label for="teacherEmail">Teacher's Email:</label>
+        <input type="email" id="teacherEmail" name="teacher_email" required>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required>Hi, teacher!</textarea>
+        
+        <button type="submit">Send Email</button>
+    </form>
+
+    <p id="statusMessage"></p>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your User ID
+        (function() {
+            emailjs.init("HrL3Qoc4WhBhhfhCW_zAS");
+        })();
+
+        // Form submission handler
+        document.getElementById('contactForm').onsubmit = function(event) {
+            event.preventDefault();  // Prevent form from submitting the traditional way
+
+            // Send email with the form data
+            emailjs.sendForm("service_g9x8676", "template_qdm3fsr", this)
+                .then(function(response) {
+                    document.getElementById('statusMessage').innerText = "Email sent successfully!";
+                }, function(error) {
+                    document.getElementById('statusMessage').innerText = "Failed to send email: " + error.text;
+                });
+        };
+    </script>
+
+</body>
+</html>
